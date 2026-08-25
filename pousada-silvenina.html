@@ -1,0 +1,646 @@
+<title>Pousada Silvenina</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Piazzolla:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root {
+    --cal: #F9F1E2;           /* limewash ivory — page ground */
+    --cal-deep: #F1E6CE;      /* slightly deeper ivory for hairlines */
+    --areia: #E8D6AA;         /* sand — card fills / alt sections */
+    --areia-deep: #D9C08A;
+    --mar: #123338;           /* deep sea ink — text on light, ground on dark */
+    --mar-soft: #2A4E52;      /* softened ink for secondary text */
+    --azul: #2E6F86;          /* shutter blue — links, structure */
+    --azul-soft: #6DA0B2;
+    --falesia: #C15B34;       /* cliff terracotta — single CTA accent */
+    --falesia-deep: #A34827;
+    --folha: #46603C;         /* foliage green — sparing */
+    --surface: var(--cal);
+    --surface-alt: var(--areia);
+    --ink: var(--mar);
+    --ink-soft: var(--mar-soft);
+    --hairline: var(--cal-deep);
+    --accent: var(--azul);
+    --cta-bg: var(--falesia);
+    --cta-bg-hover: var(--falesia-deep);
+    --cta-ink: #FBF3E4;
+    --hero-bg: var(--mar);
+    --hero-bg-2: #0C2529;
+    --hero-ink: var(--cal);
+    --hero-ink-soft: #A9C7C2;
+    --card-shadow: 0 1px 0 rgba(18, 51, 56, 0.08);
+    --focus-ring: #2E6F86;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --surface: #0E2226;
+      --surface-alt: #16302F;
+      --ink: #F3E9D6;
+      --ink-soft: #B9CFC9;
+      --hairline: #21403F;
+      --accent: #8FC2D3;
+      --cta-bg: #D97A4F;
+      --cta-bg-hover: #E68F63;
+      --cta-ink: #17282B;
+      --hero-bg: #081A1D;
+      --hero-bg-2: #050F11;
+      --hero-ink: #F3E9D6;
+      --hero-ink-soft: #8FAFA9;
+      --card-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+      --areia: #16302F;
+      --areia-deep: #1D3B39;
+      --falesia: #D97A4F;
+      --focus-ring: #8FC2D3;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --surface: #0E2226;
+    --surface-alt: #16302F;
+    --ink: #F3E9D6;
+    --ink-soft: #B9CFC9;
+    --hairline: #21403F;
+    --accent: #8FC2D3;
+    --cta-bg: #D97A4F;
+    --cta-bg-hover: #E68F63;
+    --cta-ink: #17282B;
+    --hero-bg: #081A1D;
+    --hero-bg-2: #050F11;
+    --hero-ink: #F3E9D6;
+    --hero-ink-soft: #8FAFA9;
+    --card-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    --areia: #16302F;
+    --areia-deep: #1D3B39;
+    --falesia: #D97A4F;
+    --focus-ring: #8FC2D3;
+  }
+
+  /* ============ BASE ============ */
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--surface);
+    color: var(--ink);
+    font-family: "Piazzolla", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible {
+    outline: 2.5px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 5vw, 56px);
+    padding-right: clamp(20px, 5vw, 56px);
+  }
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", "Arial Narrow", sans-serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+  p { max-width: 62ch; margin: 0; }
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--hero-bg) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid color-mix(in srgb, var(--hero-ink) 14%, transparent);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .brandmark {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    color: var(--hero-ink);
+    text-decoration: none;
+  }
+  .topbar .btn-mini {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--hero-ink);
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--hero-ink) 45%, transparent);
+    border-radius: 4px;
+    padding: 7px 12px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .topbar .btn-mini:hover { border-color: var(--hero-ink); }
+
+  /* ============ HERO ============ */
+  .hero {
+    background: linear-gradient(175deg, var(--hero-bg) 0%, var(--hero-bg-2) 100%);
+    color: var(--hero-ink);
+    padding-top: clamp(56px, 10vw, 96px);
+    padding-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    padding-bottom: clamp(70px, 12vw, 120px);
+  }
+  .hero .eyebrow { color: var(--hero-ink-soft); margin-bottom: 18px; display: block; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .hero .sub {
+    margin-top: 22px;
+    font-family: "Piazzolla", serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+    color: var(--hero-ink-soft);
+    max-width: 46ch;
+  }
+  .hero-ctas {
+    margin-top: 34px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13.5px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    padding: 13px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--cta-bg);
+    color: var(--cta-ink);
+  }
+  .btn-primary:hover { background: var(--cta-bg-hover); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--hero-ink);
+    border-color: color-mix(in srgb, var(--hero-ink) 45%, transparent);
+  }
+  .btn-ghost:hover { border-color: var(--hero-ink); }
+
+  /* cliff/wave divider between hero and body */
+  .cliff-divider {
+    display: block;
+    width: 100%;
+    height: clamp(46px, 9vw, 92px);
+    position: relative;
+    z-index: 3;
+  }
+  .cliff-divider svg { display: block; width: 100%; height: 100%; }
+
+  /* ============ INFO STRIP ============ */
+  .info-strip {
+    background: var(--surface);
+    padding-top: clamp(28px, 5vw, 40px);
+    padding-bottom: clamp(40px, 6vw, 64px);
+    margin-top: -1px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) {
+    .info-grid { grid-template-columns: 1fr; }
+  }
+  .info-card {
+    background: var(--surface-alt);
+    padding: 26px 24px;
+  }
+  .info-card .eyebrow { color: var(--accent); margin-bottom: 10px; display: block; }
+  .info-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .info-card p, .info-card .mono {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .info-card a.plain {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    text-underline-offset: 3px;
+  }
+
+  /* ============ SECTION SCAFFOLDING ============ */
+  section.block {
+    padding-top: clamp(56px, 9vw, 96px);
+    padding-bottom: clamp(56px, 9vw, 96px);
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(30px, 5vw, 46px);
+    flex-wrap: wrap;
+  }
+  .section-head .eyebrow { color: var(--accent); }
+  .section-head h2 {
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+  .section-head .count {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ============ SOBRE (about) ============ */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr;
+    gap: clamp(30px, 6vw, 64px);
+    align-items: start;
+  }
+  @media (max-width: 780px) {
+    .about-grid { grid-template-columns: 1fr; }
+  }
+  .about-grid p + p { margin-top: 18px; }
+  .about-grid .lede {
+    font-size: 1.18rem;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .facade {
+    border: 1.5px solid var(--hairline);
+    border-radius: 4px 4px 120px 120px / 4px 4px 90px 90px;
+    padding: 30px 26px 34px;
+    background: var(--surface-alt);
+    text-align: center;
+  }
+  .facade .door {
+    width: 46px;
+    height: 66px;
+    margin: 0 auto 18px;
+    border: 3px solid var(--azul);
+    border-radius: 46% 46% 6px 6px / 30% 30% 6px 6px;
+    background: color-mix(in srgb, var(--azul) 14%, transparent);
+  }
+  .facade .stat {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-weight: 700;
+    font-size: 2.3rem;
+    color: var(--falesia);
+    line-height: 1;
+  }
+  .facade .stat-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+  .facade .divider-line {
+    width: 40px;
+    height: 1px;
+    background: var(--hairline);
+    margin: 20px auto;
+  }
+  .facade .note {
+    font-family: "Piazzolla", serif;
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+
+  /* ============ REGION (dark) ============ */
+  .region {
+    background: linear-gradient(175deg, var(--hero-bg) 0%, var(--hero-bg-2) 100%);
+    color: var(--hero-ink);
+    position: relative;
+  }
+  .region .eyebrow { color: var(--hero-ink-soft); }
+  .region .section-head h2 { color: var(--hero-ink); }
+  .region .section-head .count { color: var(--hero-ink-soft); }
+  .region > .wrap > p {
+    color: var(--hero-ink-soft);
+    font-size: 1.02rem;
+    max-width: 60ch;
+    margin-bottom: 40px;
+  }
+  .beach-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 780px) {
+    .beach-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .beach-grid { grid-template-columns: 1fr; }
+  }
+  .beach-card {
+    border: 1px solid color-mix(in srgb, var(--hero-ink) 18%, transparent);
+    border-radius: 8px;
+    padding: 18px 18px 20px;
+    background: color-mix(in srgb, var(--hero-ink) 5%, transparent);
+  }
+  .beach-card .idx {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px;
+    color: var(--falesia);
+    letter-spacing: 0.05em;
+  }
+  .beach-card h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-bottom: 6px;
+    color: var(--hero-ink);
+  }
+  .beach-card p {
+    font-size: 13.8px;
+    color: var(--hero-ink-soft);
+    line-height: 1.5;
+  }
+  .region .note-strip {
+    margin-top: 40px;
+    padding-top: 26px;
+    border-top: 1px solid color-mix(in srgb, var(--hero-ink) 16%, transparent);
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: baseline;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--hero-ink-soft);
+  }
+  .region .note-strip strong { color: var(--hero-ink); font-weight: 600; }
+
+  /* ============ FOOTER / CONTATO ============ */
+  footer.block {
+    background: var(--surface-alt);
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(30px, 6vw, 60px);
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+  .ledger dt {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 20px;
+  }
+  .ledger dt:first-child { margin-top: 0; }
+  .ledger dd {
+    margin: 6px 0 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .ledger a { text-decoration: underline; text-underline-offset: 3px; }
+  .stamp {
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    border: 2px solid var(--falesia);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transform: rotate(-8deg);
+    flex-shrink: 0;
+  }
+  .stamp-inner {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--falesia);
+    line-height: 1.35;
+  }
+  .stamp-inner .big {
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: block;
+  }
+  .stamp-inner .small {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+  .foot-bottom {
+    margin-top: clamp(40px, 6vw, 64px);
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .foot-bottom a { text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--ink-soft) 55%, transparent); }
+</style>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brandmark" href="#topo">POUSADA SILVENINA</a>
+    <a class="btn-mini" href="https://wa.me/557330211679" target="_blank" rel="noopener">Reservar · (73) 3021-1679</a>
+  </div>
+</div>
+
+<header class="hero" id="topo">
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Novo Prado · Prado, Bahia</span>
+    <h1>Pousada<br>Silvenina</h1>
+    <p class="sub">Hospedagem simples e acolhedora a poucos passos do mar, no litoral sul da Bahia — recebendo viajantes desde 1995.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://wa.me/557330211679" target="_blank" rel="noopener">Reservar pelo WhatsApp →</a>
+      <a class="btn btn-ghost" href="https://maps.app.goo.gl/vyn8jeEvyoCaGaLL8" target="_blank" rel="noopener">Ver localização no mapa</a>
+    </div>
+  </div>
+  <div class="cliff-divider" aria-hidden="true">
+    <svg viewBox="0 0 400 60" preserveAspectRatio="none">
+      <path d="M0,60 L0,32 C40,10 70,44 110,26 C150,8 180,40 220,24 C260,8 290,42 330,28 C355,19 380,30 400,22 L400,60 Z" fill="var(--surface)"></path>
+    </svg>
+  </div>
+</header>
+
+<section class="info-strip">
+  <div class="wrap">
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="eyebrow">Sobre</span>
+        <h3>Trinta anos de casa aberta</h3>
+        <p>Pousada de administração familiar em Prado, na região conhecida como o "Caribe do Nordeste".</p>
+      </div>
+      <div class="info-card">
+        <span class="eyebrow">Localização</span>
+        <h3>Bairro Novo Prado</h3>
+        <p class="mono">Rua 05, s/n, Quadra D, Lote 034<br>Novo Prado — Prado, BA<br>CEP 45980-000</p>
+      </div>
+      <div class="info-card">
+        <span class="eyebrow">Contato</span>
+        <h3>Reservas por WhatsApp</h3>
+        <p><a class="plain" href="https://wa.me/557330211679" target="_blank" rel="noopener">(73) 3021-1679</a><br>
+        <a class="plain" href="https://www.instagram.com/pousadasilvenina/" target="_blank" rel="noopener">@pousadasilvenina</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="sobre">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">Sobre a pousada</span>
+      <h2 style="margin-top:8px; margin-bottom:22px;">Uma hospedagem de bairro, no ritmo de Prado</h2>
+      <p class="lede">Fundada em 1995, a Pousada Silvenina é uma das casas de hospedagem mais antigas do Novo Prado.</p>
+      <p>Não é um resort — é um endereço simples, de portas conhecidas na vizinhança, para quem viaja até o sul da Bahia atrás de praia, silêncio e um preço justo. Os quartos contam com ar-condicionado, e a casa fica no bairro Novo Prado, próxima à praia de mesmo nome, uma das mais estruturadas da cidade.</p>
+      <p>A reserva é feita diretamente com a família, por telefone ou WhatsApp — sem intermediários, do jeito que a pousada sempre funcionou.</p>
+    </div>
+    <div class="facade" aria-hidden="true">
+      <div class="door"></div>
+      <span class="stat">31</span>
+      <span class="stat-label">anos recebendo hóspedes</span>
+      <div class="divider-line"></div>
+      <span class="note">"1995–2026"</span>
+    </div>
+  </div>
+</section>
+
+<section class="block region" id="regiao">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">A região</span>
+        <h2>Prado, a Bahia sem pressa</h2>
+      </div>
+      <span class="count">80+ km de litoral</span>
+    </div>
+    <p>Apelidada de "Caribe do Nordeste", Prado soma mais de 80 km de praias, falésias coloridas e vegetação nativa entre o centro e vilarejos vizinhos como Cumuruxatiba e Corumbau. Entre junho e novembro, é também parada de baleias-jubarte na costa.</p>
+    <div class="beach-grid">
+      <div class="beach-card">
+        <span class="idx">PRAIA 01</span>
+        <h3>Novo Prado</h3>
+        <p>A mais próxima da pousada — infraestrutura completa, pertinho do centro.</p>
+      </div>
+      <div class="beach-card">
+        <span class="idx">PRAIA 02</span>
+        <h3>Do Farol</h3>
+        <p>Falésias coloridas e um farol histórico, com pouco movimento.</p>
+      </div>
+      <div class="beach-card">
+        <span class="idx">PRAIA 03</span>
+        <h3>Da Paixão</h3>
+        <p>Águas calmas e azul-esverdeadas, ideal para famílias.</p>
+      </div>
+      <div class="beach-card">
+        <span class="idx">PRAIA 04</span>
+        <h3>De Guaratiba</h3>
+        <p>Recifes de corais e mar tranquilo para mergulho de superfície.</p>
+      </div>
+      <div class="beach-card">
+        <span class="idx">PRAIA 05</span>
+        <h3>Do Tororão</h3>
+        <p>Falésias vermelhas e areia deserta — uma das mais bonitas da região.</p>
+      </div>
+      <div class="beach-card">
+        <span class="idx">PASSEIO</span>
+        <h3>Baleias-jubarte</h3>
+        <p>Observação embarcada na alta temporada, entre junho e novembro.</p>
+      </div>
+    </div>
+    <div class="note-strip">
+      <span><strong>Monte Pascoal</strong> — sítio histórico a poucas horas</span>
+      <span><strong>Abrolhos</strong> — primeiro parque marinho do Brasil</span>
+    </div>
+  </div>
+</section>
+
+<footer class="block" id="contato">
+  <div class="wrap foot-grid">
+    <div>
+      <span class="eyebrow">Reservas e contato</span>
+      <dl class="ledger">
+        <dt>Telefone / WhatsApp</dt>
+        <dd><a href="https://wa.me/557330211679" target="_blank" rel="noopener">(73) 3021-1679</a></dd>
+        <dt>Endereço</dt>
+        <dd>Rua 05, s/n, Quadra D, Lote 034<br>Novo Prado — Prado, BA — CEP 45980-000</dd>
+        <dt>Redes</dt>
+        <dd>
+          <a href="https://www.instagram.com/pousadasilvenina/" target="_blank" rel="noopener">Instagram @pousadasilvenina</a><br>
+          <a href="https://www.facebook.com/pousadasilvenina/" target="_blank" rel="noopener">Facebook /pousadasilvenina</a>
+        </dd>
+        <dt>Mapa</dt>
+        <dd><a href="https://maps.app.goo.gl/vyn8jeEvyoCaGaLL8" target="_blank" rel="noopener">Abrir no Google Maps</a></dd>
+      </dl>
+    </div>
+    <div class="stamp" aria-hidden="true">
+      <div class="stamp-inner">
+        <span class="big">Desde<br>1995</span>
+        <span class="small">Prado · Bahia</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>Pousada Silvenina — Novo Prado, Prado/BA</span>
+    <span>Informações reunidas a partir de cadastros públicos — confirme detalhes ao reservar.</span>
+  </div>
+</footer>
